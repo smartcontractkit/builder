@@ -34,7 +34,7 @@ RUN set -ex \
 done
 
 # Node
-ENV NODE_VERSION 9.10.1
+ENV NODE_VERSION 8.11.1
 
 RUN curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
