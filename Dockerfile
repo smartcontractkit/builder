@@ -73,3 +73,7 @@ RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest
 
 # Clone the Rust SGX SDK
 RUN git clone https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
+
+# Install tarpaulin for rust code coverage
+ENV PATH /root/.cargo/bin:$PATH
+RUN RUSTFLAGS="--cfg procmacro2_semver_exempt" cargo install cargo-tarpaulin
