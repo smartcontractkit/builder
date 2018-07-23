@@ -2,7 +2,8 @@
 FROM baiduxlab/sgx-rust:1.0.0
 
 # Add all the things we need to build chainlink
-RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq
 
 # Install go 1.10.1
 RUN cd /usr/local && \
@@ -63,6 +64,12 @@ RUN set -ex \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+
+# Install goverage to capture go test coverage
+RUN go get -u github.com/haya14busa/goverage
+RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 \
+      > "/usr/local/bin/cc-test-reporter" \
+      && chmod +x "/usr/local/bin/cc-test-reporter"
 
 # Clone the Rust SGX SDK
 RUN git clone https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
