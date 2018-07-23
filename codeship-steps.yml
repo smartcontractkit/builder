@@ -7,6 +7,7 @@
   encrypted_dockercfg_path: dockercfg.encrypted
 
 - name: Publish Image w/Latest Tag
+  tag: master
   type: push
   service: builder
   image_name: smartcontract/builder
