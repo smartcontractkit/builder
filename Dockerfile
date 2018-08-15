@@ -65,6 +65,8 @@ RUN set -ex \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
+RUN yarn config set registry "http://registry.npmjs.org/"
+
 # Install goverage to capture go test coverage
 RUN go get -u github.com/smartcontractkit/goverage
 RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 \
