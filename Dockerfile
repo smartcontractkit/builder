@@ -5,9 +5,9 @@ FROM baiduxlab/sgx-rust:1.0.1
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq
 
-# Install go 1.10.1
+# Install go 1.10.3
 RUN cd /usr/local && \
-  curl -sS https://dl.google.com/go/go1.10.1.linux-amd64.tar.gz | tar -xz
+  curl -sS https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz | tar -xz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
