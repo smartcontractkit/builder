@@ -3,11 +3,11 @@ FROM baiduxlab/sgx-rust:1.0.1
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq
+RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq lsb-release
 
-# Install go 1.10.1
+# Install go 1.10.3
 RUN cd /usr/local && \
-  curl -sS https://dl.google.com/go/go1.10.1.linux-amd64.tar.gz | tar -xz
+  curl -sS https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz | tar -xz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
@@ -79,3 +79,9 @@ RUN git clone https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
 # Install tarpaulin for rust code coverage
 ENV PATH /root/.cargo/bin:$PATH
 RUN RUSTFLAGS="--cfg procmacro2_semver_exempt" cargo install cargo-tarpaulin
+
+# Google Cloud SDK
+RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
+    echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    apt-get update -y && apt-get install google-cloud-sdk kubectl -y
