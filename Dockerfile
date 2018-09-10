@@ -75,3 +75,6 @@ RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest
 
 # Clone the Rust SGX SDK
 RUN git clone --depth 1 --branch v1.0.1 https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
+
+# Add cargo to the path
+ENV PATH /root/.cargo/bin:$PATH
