@@ -5,9 +5,9 @@ FROM baiduxlab/sgx-rust:1.0.1
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq
 
-# Install go 1.10.3
+# Install go 1.11
 RUN cd /usr/local && \
-  curl -sS https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz | tar -xz
+  curl -sS https://dl.google.com/go/go1.11.linux-amd64.tar.gz | tar -xz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
@@ -74,8 +74,4 @@ RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest
       && chmod +x "/usr/local/bin/cc-test-reporter"
 
 # Clone the Rust SGX SDK
-RUN git clone https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
-
-# Install tarpaulin for rust code coverage
-ENV PATH /root/.cargo/bin:$PATH
-RUN RUSTFLAGS="--cfg procmacro2_semver_exempt" cargo install cargo-tarpaulin
+RUN git clone --depth 1 --branch v1.0.1 https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
