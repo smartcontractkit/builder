@@ -46,7 +46,7 @@ RUN curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 # Yarn
-ENV YARN_VERSION 1.5.1
+ENV YARN_VERSION 1.12.1
 
 RUN set -ex \
   && for key in \
