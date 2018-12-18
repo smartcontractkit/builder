@@ -97,8 +97,15 @@ RUN apt-get install -y wget libgconf-2-4 --no-install-recommends \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
     && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst \
-      --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
+      --no-install-recommends 
+
+# Install the C++ solidity compiler.
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:ethereum/ethereum \
+    && apt-get -y update && apt-get install -y solc
+
+# Clean up apt's intermediate files
+RUN rm -rf /var/lib/apt/lists/* \
     && rm -rf /src/*.deb
 
 # It's a good idea to use dumb-init to help prevent zombie chrome processes.
