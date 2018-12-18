@@ -97,7 +97,7 @@ RUN apt-get install -y wget libgconf-2-4 --no-install-recommends \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
     && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst \
-      --no-install-recommends 
+      --no-install-recommends
 
 # Install the C++ solidity compiler.
 RUN apt-get install -y software-properties-common
