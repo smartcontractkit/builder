@@ -1,5 +1,5 @@
 # Start from the sgx-rust base image
-FROM baiduxlab/sgx-rust:1804
+FROM baiduxlab/sgx-rust:1804-1.0.5
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
@@ -74,7 +74,7 @@ RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest
       && chmod +x "/usr/local/bin/cc-test-reporter"
 
 # Clone the Rust SGX SDK
-RUN git clone --depth 1 --branch v1.0.4 https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
+RUN git clone --depth 1 --branch v1.0.5 https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
 
 # Add cargo to the path
 ENV PATH /root/.cargo/bin:$PATH
