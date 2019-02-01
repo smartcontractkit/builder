@@ -1,5 +1,5 @@
 # Start from the sgx-rust base image
-FROM baiduxlab/sgx-rust:1804
+FROM baiduxlab/sgx-rust:1804-1.0.5
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
