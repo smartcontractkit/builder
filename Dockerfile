@@ -3,7 +3,7 @@ FROM baiduxlab/sgx-rust:1804
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq lsb-release
+RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq lsb-release gdb
 
 # Install go 1.11
 RUN cd /usr/local && \
