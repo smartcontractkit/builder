@@ -79,6 +79,10 @@ RUN git clone --depth 1 --branch v1.0.4 https://github.com/baidu/rust-sgx-sdk/ /
 # Add cargo to the path
 ENV PATH /root/.cargo/bin:$PATH
 
+# Add the wasm target as well as wasm-gc
+RUN rustup target add wasm32-unknown-unknown
+RUN cargo install --git https://github.com/alexcrichton/wasm-gc
+
 # Add kubeval for kubernetes template validation
 RUN curl -fSL --compressed https://github.com/garethr/kubeval/releases/download/0.7.3/kubeval-linux-amd64.tar.gz | tar -C /usr/local/bin -xvz
 
