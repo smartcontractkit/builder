@@ -1,9 +1,9 @@
 # Start from the sgx-rust base image
-FROM baiduxlab/sgx-rust:1804
+FROM baiduxlab/sgx-rust:1804-1.0.5
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq lsb-release
+RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq lsb-release gdb
 
 # Install go 1.11
 RUN cd /usr/local && \
@@ -78,6 +78,10 @@ RUN git clone --depth 1 --branch v1.0.4 https://github.com/baidu/rust-sgx-sdk/ /
 
 # Add cargo to the path
 ENV PATH /root/.cargo/bin:$PATH
+
+# Add the wasm target as well as wasm-gc
+RUN rustup target add wasm32-unknown-unknown
+RUN cargo install --git https://github.com/alexcrichton/wasm-gc
 
 # Add kubeval for kubernetes template validation
 RUN curl -fSL --compressed https://github.com/garethr/kubeval/releases/download/0.7.3/kubeval-linux-amd64.tar.gz | tar -C /usr/local/bin -xvz
