@@ -111,6 +111,9 @@ RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ethereum/ethereum \
     && apt-get -y update && apt-get install -y solc
 
+# Install python for slither
+RUN add-apt-repository ppa:deadsnakes/ppa && apt install python3.7
+
 # Clean up apt's intermediate files
 RUN rm -rf /var/lib/apt/lists/* \
     && rm -rf /src/*.deb
