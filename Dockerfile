@@ -112,7 +112,7 @@ RUN add-apt-repository -y ppa:ethereum/ethereum \
     && apt-get -y update && apt-get install -y solc ethereum
 
 # Install python for slither
-RUN add-apt-repository ppa:deadsnakes/ppa && apt install python3.7
+RUN add-apt-repository -y ppa:deadsnakes/ppa && apt-get install -y python3.7
 
 # Clean up apt's intermediate files
 RUN rm -rf /var/lib/apt/lists/* \
