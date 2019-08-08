@@ -109,7 +109,11 @@ RUN apt-get install -y wget libgconf-2-4 --no-install-recommends \
 # Install the C++ solidity compiler.
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ethereum/ethereum \
-    && apt-get -y update && apt-get install -y solc
+    && apt-get -y update && apt-get install -y solc ethereum
+
+# Install python & slither
+RUN apt-get install -y python3.7 python3-pip
+RUN pip3 install slither-analyzer
 
 # Clean up apt's intermediate files
 RUN rm -rf /var/lib/apt/lists/* \
