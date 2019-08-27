@@ -111,9 +111,8 @@ RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ethereum/ethereum \
     && apt-get -y update && apt-get install -y solc ethereum
 
-# Install python & slither
+# Install python
 RUN apt-get install -y python3.7 python3-pip
-RUN pip3 install slither-analyzer
 
 # Clean up apt's intermediate files
 RUN rm -rf /var/lib/apt/lists/* \
