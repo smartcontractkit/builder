@@ -104,6 +104,9 @@ RUN apt-get install -y wget libgconf-2-4 --no-install-recommends \
     && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst \
       --no-install-recommends
 
+# Install dependencies needed to run cypress
+RUN apt-get update && apt-get install -y xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+
 # Install the C++ solidity compiler.
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ethereum/ethereum \
@@ -111,7 +114,6 @@ RUN add-apt-repository -y ppa:ethereum/ethereum \
 
 # Install python & slither
 RUN apt-get install -y python3.7 python3-pip
-RUN pip3 install slither-analyzer
 
 # Clean up apt's intermediate files
 RUN rm -rf /var/lib/apt/lists/* \
