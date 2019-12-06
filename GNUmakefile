@@ -1,3 +1,3 @@
 .PHONY: all
 all:
-	docker build -t smartcontract/builder:1.0.26 .
+	docker build -t smartcontract/builder:1.0.25 .
