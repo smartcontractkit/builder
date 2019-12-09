@@ -1,7 +1,7 @@
 # Builder Docker Image
 
-This project contains the docker image used to build [smartcontract/chainlink](https://github.com/smartcontractkit/chainlink).
+This project contains the docker image used as part of [Chainlink](https://github.com/smartcontractkit/chainlink)'s Continuous Integration (CI).
 
 It is based on the baidu SGX builder image and adds Go 1.12, Node 10.16.3 and Yarn 1.17.3.
 
-Any merge to master is automatically deployed by Github Actions. The docker tag on dockerhub is smartcontract/builder.
+On merges to master it publishes a [docker image](https://hub.docker.com/r/smartcontract/builder).
