@@ -13,9 +13,6 @@ ENV GOROOT /usr/local/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
 RUN mkdir -p $GOPATH/bin && mkdir $GOPATH/src
 
-# Dep is used to manage dependencies
-RUN curl -sS https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-
 # GPG Keys for Node and Yarn
 # Release team keys published here: https://github.com/nodejs/node#release-keys
 RUN set -ex \
