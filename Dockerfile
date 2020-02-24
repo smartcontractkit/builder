@@ -5,9 +5,9 @@ FROM baiduxlab/sgx-rust:1804-1.1.0
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq lsb-release gdb
 
-# Install go 1.12
+# Install go
 RUN cd /usr/local && \
-  curl -sS https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz | tar -xz
+  curl -sS https://dl.google.com/go/go1.13.8.linux-amd64.tar.gz | tar -xz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
@@ -29,7 +29,9 @@ RUN set -ex \
     DD8F2338BAE7501E3DD5AC78C273792F7D83545D \
     A48C2BEE680E841632CD4E44F07496B3EB3C1762 \
   ; do \
-    gpg --keyserver pool.sks-keyservers.net --recv-keys "$key" ; \
+      gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
+      gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
+      gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
 done
 
 # Node
