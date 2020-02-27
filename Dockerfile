@@ -121,3 +121,8 @@ RUN rm -rf /var/lib/apt/lists/* \
 # It's a good idea to use dumb-init to help prevent zombie chrome processes.
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
+
+# Set some required ENV vars for child images
+ENV LD_LIBRARY_PATH /opt/sgxsdk/sdk_libs
+ENV SGX_SDK /opt/sgxsdk
+
