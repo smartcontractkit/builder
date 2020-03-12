@@ -3,7 +3,7 @@ FROM baiduxlab/sgx-rust:1804-1.1.0
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential jq lsb-release gdb
+RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential lsb-release
 
 # Install go
 RUN cd /usr/local && \
@@ -111,12 +111,11 @@ RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ethereum/ethereum \
     && apt-get -y update && apt-get install -y solc ethereum
 
-# Install python & slither
-RUN apt-get install -y python3.7 python3-pip
+# Install tools intended to be used in the final image
+RUN apt-get install -y python3.7 python3-pip jq libudev-dev libusb-dev libusb-1.0-0 gdb jq
 
 # Clean up apt's intermediate files
-RUN rm -rf /var/lib/apt/lists/* \
-    && rm -rf /src/*.deb
+RUN rm -rf /var/lib/apt/lists/* && rm -rf /src/*.deb
 
 # It's a good idea to use dumb-init to help prevent zombie chrome processes.
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
@@ -125,4 +124,3 @@ RUN chmod +x /usr/local/bin/dumb-init
 # Set some required ENV vars for child images
 ENV LD_LIBRARY_PATH /opt/sgxsdk/sdk_libs
 ENV SGX_SDK /opt/sgxsdk
-
