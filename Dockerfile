@@ -13,6 +13,9 @@ ENV GOROOT /usr/local/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
 RUN mkdir -p $GOPATH/bin && mkdir $GOPATH/src
 
+# GoSec is used for linting
+RUN go get github.com/securego/gosec/cmd/gosec
+
 # GPG Keys for Node and Yarn
 # Release team keys published here: https://github.com/nodejs/node#release-keys
 RUN set -ex \
