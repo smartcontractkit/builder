@@ -13,10 +13,6 @@ ENV GOROOT /usr/local/go
 ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
 RUN mkdir -p $GOPATH/bin && mkdir $GOPATH/src
 
-# Go linting tools
-RUN go get github.com/securego/gosec/cmd/gosec
-RUN go get -u github.com/kisielk/errcheck
-
 # GPG Keys for Node and Yarn
 # Release team keys published here: https://github.com/nodejs/node#release-keys
 RUN set -ex \
