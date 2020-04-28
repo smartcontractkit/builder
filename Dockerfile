@@ -3,6 +3,8 @@ FROM baiduxlab/sgx-rust:1804-1.1.0
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:git-core/ppa
 RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential lsb-release
 
 # Install go
@@ -111,7 +113,6 @@ RUN apt-get install -y wget libgconf-2-4 --no-install-recommends \
 RUN apt-get update && apt-get install -y xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 
 # Install the C++ solidity compiler.
-RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ethereum/ethereum \
     && apt-get -y update && apt-get install -y solc ethereum
 
