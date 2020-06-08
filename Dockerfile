@@ -37,7 +37,7 @@ RUN set -ex \
 done
 
 # Node
-ENV NODE_VERSION 10.16.3
+ENV NODE_VERSION 12.18.0
 
 RUN curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
@@ -48,7 +48,7 @@ RUN curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 # Yarn
-ENV YARN_VERSION 1.17.3
+ENV YARN_VERSION 1.22.4
 
 RUN set -ex \
   && for key in \
