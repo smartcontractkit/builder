@@ -9,12 +9,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set version output
+        id: config
+        run: |
+          echo "::set-output name=ImageTag::1.0.35"
       - uses: actions/checkout@v2-beta
-      - name: Build the Docker image
-        run: docker build .
-      - name: Publish to Registry
+      - name: Build and publish to Docker Hub
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: smartcontract/builder:1.0.35
+          name: "smartcontract/builder:${{ steps.config.outputs.ImageTag }}"
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          aws-region: "${{ secrets.AWS_DEFAULT_REGION }}"
+          role-to-assume: "${{ secrets.AWS_ROLE_TO_ASSUME }}"
+          role-duration-seconds: 1200
+          role-session-name: "temp-session"
+          role-skip-session-tagging: true
+      - name: Docker login to ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Push to ECR
+        env:
+          TAG: ${{ steps.config.outputs.ImageTag }}
+        run: |
+          docker tag "smartcontract/builder:${TAG}" "${{ secrets.AWS_ECR_ACCOUNT_URL }}/builder:${TAG}"
+          docker push "${{ secrets.AWS_ECR_ACCOUNT_URL }}/builder:${TAG}"
