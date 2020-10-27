@@ -95,10 +95,6 @@ RUN apt-get install -y wget libgconf-2-4 --no-install-recommends \
 # Install dependencies needed to run cypress
 RUN apt-get update && apt-get install -y xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 
-# Install the C++ solidity compiler.
-RUN add-apt-repository -y ppa:ethereum/ethereum \
-    && apt-get -y update && apt-get install -y solc ethereum
-
 # Install tools intended to be used in the final image
 RUN apt-get install -y python3.7 python3-pip jq libudev-dev libusb-dev libusb-1.0-0 gdb jq
 
