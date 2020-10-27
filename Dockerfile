@@ -1,5 +1,5 @@
 # Start from the sgx-rust base image
-FROM baiduxlab/sgx-rust:1804-1.1.0
+FROM ubuntu:18.04
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
@@ -75,19 +75,6 @@ RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest
       > "/usr/local/bin/cc-test-reporter" \
       && chmod +x "/usr/local/bin/cc-test-reporter"
 
-# Clone the Rust SGX SDK
-RUN git clone --depth 1 --branch v1.1.0 https://github.com/baidu/rust-sgx-sdk/ /opt/rust-sgx-sdk
-
-# Add cargo to the path
-ENV PATH /root/.cargo/bin:$PATH
-
-# Add the wasm target as well as wasm-gc
-RUN rustup target add wasm32-unknown-unknown
-RUN cargo install --git https://github.com/alexcrichton/wasm-gc
-
-# Add kubeval for kubernetes template validation
-RUN curl -fSL --compressed https://github.com/garethr/kubeval/releases/download/0.7.3/kubeval-linux-amd64.tar.gz | tar -C /usr/local/bin -xvz
-
 # Google Cloud SDK
 RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
     echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
@@ -121,7 +108,3 @@ RUN rm -rf /var/lib/apt/lists/* && rm -rf /src/*.deb
 # It's a good idea to use dumb-init to help prevent zombie chrome processes.
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
-
-# Set some required ENV vars for child images
-ENV LD_LIBRARY_PATH /opt/sgxsdk/sdk_libs
-ENV SGX_SDK /opt/sgxsdk
