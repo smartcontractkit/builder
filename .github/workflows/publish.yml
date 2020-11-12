@@ -12,7 +12,7 @@ jobs:
       - name: Set version output
         id: config
         run: |
-          echo "::set-output name=ImageTag::1.0.38"
+          echo "::set-output name=ImageTag::1.0.39"
       - uses: actions/checkout@v2-beta
       - name: Build and publish to Docker Hub
         uses: elgohr/Publish-Docker-Github-Action@master
