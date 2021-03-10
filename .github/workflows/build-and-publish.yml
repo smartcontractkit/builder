@@ -1,0 +1,52 @@
+name: Build and push Docker image
+
+on: create
+
+jobs:
+  build-and-push:
+    name: Build and Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Build Docker tags
+        id: pre
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          elif [[ $GITHUB_REF == refs/heads/* ]]; then
+            TAG="${GITHUB_REF##*/}"
+          fi
+          echo ::set-output name=tag::${TAG}
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v1.0.1
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v1.1.1
+
+      - name: Docker Login
+        uses: docker/login-action@v1.6.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-duration-seconds: 1200
+          role-session-name: "temp-session"
+          role-skip-session-tagging: true
+      - name: Amazon ECR Login
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2.3.0
+        with:
+          tags: |
+            smartcontract/builder:${{ steps.pre.outputs.tag }}
+            ${{ secrets.AWS_ECR_ACCOUNT_URL }}/builder:${{ steps.pre.outputs.tag }}
+          platforms: linux/386,linux/amd64,linux/arm64
+          push: true
