@@ -5,7 +5,7 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:git-core/ppa
-RUN apt-get update && apt-get install -y curl git gcc libssl1.0.0 build-essential lsb-release zstd
+RUN apt-get update && apt-get install -y curl git gcc libssl1.0 build-essential lsb-release zstd
 
 # Install go
 RUN cd /usr/local && \
