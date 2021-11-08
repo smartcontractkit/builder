@@ -1,8 +1,3 @@
-
-# DEPRECATED
-
-Chainlink no longer uses this image for any builds.
-
 # Builder Docker Image
 
 This project contains the docker image used as part of [Chainlink](https://github.com/smartcontractkit/chainlink)'s Continuous Integration (CI).
