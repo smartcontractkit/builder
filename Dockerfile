@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # Add all the things we need to build chainlink
 ENV DEBIAN_FRONTEND noninteractive
